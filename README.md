@@ -63,7 +63,7 @@ Esquemático do projeto no tinkerCad
 Planejamento
 
 
-# IMPLEMENTAÇÃO
+## IMPLEMENTAÇÃO
 
 
 - O LDR funciona da seguinte maneira, quanto maior a luminosidade incidente no LDR, mais o servo motor se moverá na direção do LDR. Essa movimentação ocorrerá até que todos os LDRs estejam com o mesmo percentual de iluminação.
