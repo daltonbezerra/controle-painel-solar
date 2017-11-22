@@ -37,6 +37,13 @@ Cabos,
 LED (01)
 
 
+## FLUXOGRAMA
+
+ 
+![image](https://user-images.githubusercontent.com/32208559/33126381-6bbd47f2-cf6b-11e7-8340-d3f78960ac3e.png)
+
+
+
 ## IMPLEMENTAÇÃO
 
 - O LDR funciona da seguinte maneira, quanto maior a luminosidade incidente no LDR, mais o servo motor se moverá na direção do LDR. Essa movimentação ocorrerá até que todos os LDRs estejam com o mesmo percentual de iluminação.
