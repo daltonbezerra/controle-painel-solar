@@ -43,6 +43,11 @@ LED (01)
 ![image](https://user-images.githubusercontent.com/32208559/33126381-6bbd47f2-cf6b-11e7-8340-d3f78960ac3e.png)
 
 
+## DIAGRAMA DE BLOCOS
+
+
+
+
 
 ## IMPLEMENTAÇÃO
 
