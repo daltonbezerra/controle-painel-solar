@@ -9,7 +9,7 @@ Dalton Bezerra,
 Rodrigo Paulo
 
 
-# INTRODUÇÃO
+## INTRODUÇÃO
 
 O objetivo do projeto é construir um painel solar que permita tanto o controle manual quanto o controle automático do mesmo. Para isso, utilizaremos um botão para definir o modo de controle que iremos utilizar.
 
@@ -37,7 +37,7 @@ Cabos,
 LED (01)
 
 
-# IMPLEMENTAÇÃO
+## IMPLEMENTAÇÃO
 
 - O LDR funciona da seguinte maneira, quanto maior a luminosidade incidente no LDR, mais o servo motor se moverá na direção do LDR. Essa movimentação ocorrerá até que todos os LDRs estejam com o mesmo percentual de iluminação.
 
