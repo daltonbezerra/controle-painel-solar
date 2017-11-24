@@ -193,14 +193,23 @@ int derro2=0;
 #### Esse bloco do código declara o LED como componente de saída e o botão como entrada. Além disso, informa em quais portas digitais estão conectados cada servo e define qual variável irá representar a rotação de cada servo.
 
 void setup(){
+
   pinMode(led, OUTPUT);
+  
   pinMode(botao, INPUT);
+  
   digitalWrite(led,0);
+  
   meuservo1.attach(2);
+  
   meuservo2.attach(4);
+  
   meuservo1.write(pos1);
+  
   meuservo2.write(pos2);
+  
   Serial.begin(9600);
+  
 }
 
 
@@ -208,9 +217,13 @@ void setup(){
 #### Por padrão, o programa começa a rodar no modo manual, caso o botão seja pressionado ele passa a rodar no modo automático.
 
 void loop(){
+
   int press = digitalRead(botao);
+  
   if (press == 1){
+  
    var =1-var;
+   
   }
 
 
@@ -218,13 +231,21 @@ void loop(){
 
 #### modo manual
   if (var == 0){
+  
   digitalWrite(led,var);
+  
     int leiturapot1 = analogRead(pot1);
+    
     int leiturapot2 = analogRead(pot2);
+    
     int graus1 = map(leiturapot1, 0, 1023, 0, 60);
+    
     int graus2 = map(leiturapot2, 0, 1023, 0, 60);
+    
     meuservo1.write(graus1);
+    
     meuservo2.write(graus2);
+    
   }
   
 #### Este bloco do código representa ao modo automático de operação. O arduíno entrará nesta parte do código caso o botão seja pressionado.
@@ -235,14 +256,23 @@ void loop(){
 
 #### modo automatico
   if (var == 1){
+  
  digitalWrite(led,var);
+ 
  int leitura1 = analogRead(LDR1);
+ 
  int leitura2 = analogRead(LDR2);
+ 
  int leitura3 = analogRead(LDR3);
+ 
  int leitura4 = analogRead(LDR4);
+ 
  int graus1 = map(leitura1, 1017,344,0,100);
+ 
  int graus2 = map(leitura2, 1017,344,0,100);
+ 
  int graus3 = map(leitura3, 1017,344,0,100);
+  
  int graus4 = map(leitura4, 1017,344,0,100);
 
 
