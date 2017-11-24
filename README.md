@@ -220,9 +220,9 @@ void loop(){
 
 #### Neste próximo bloco do código, ocorre a comparação da incidência de luz em cada LDR e é aplicado o PID.
 #### Para calculo do PID é necessario ter a diferença entre os valores dos LDRS, do erro atual, do erro anterior,
-#### tempo atual e tempo anterior. Com esse dados é possivel descobir realizar os calculos do PID:
+#### do tempo atual e o tempo anterior. Com esse dados é possível realizar os calculos do PID:
 #### P=Kp x E(t), I=I + Ki x E(t) x Dt, D=(Derro/Dt) x Kd, tendo como calculo final para o servo motor: OUTPUT=P+I+D.
-#### A comparação é necessária pois é através dela que definiremos para qual lado o servo motor deverá rotacionar.
+
  
   if (graus1>graus2){
   
