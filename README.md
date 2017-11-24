@@ -127,8 +127,8 @@ Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o s
 # O CÓDIGO
 
 
-#### Inclui a livraria dos servo motores e declara todas as variáveis que serão utilizadas ao longo do código, bem como todas portas nas quais estão conectados cada componente.
-
+#### Neste trecho do código é onde nós declaramos todas as variáveis que serâo utilizadas ao longo do código. É aqui também que informamos ao arduino em que porta cada componente está conectado. Caso do LDR 1 que está conectado a porta analógica 5.
+{
 #include <Servo.h>
 
 Servo meuservo1;
@@ -188,7 +188,7 @@ int erro2=0;
 int erro2_ant=0;
 
 int derro2=0;
-
+}
 
 #### Esse bloco do código declara o LED como componente de saída e o botão como entrada. Além disso, informa em quais portas digitais estão conectados cada servo e define qual variável irá representar a rotação de cada servo.
 
