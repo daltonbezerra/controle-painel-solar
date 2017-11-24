@@ -115,7 +115,7 @@ LED (01)
 Esse é o diagrama de blocos de malha fechada, ele ilustra o que acontece com o sistema quando estamos operando no modo automático, ou seja, utilizando os LDRs. O input inicial é um valor já definido na declaração de variáveis do código. O arduino atua com esse valor em cima dos servo motores e após a primeira interação, os LDRs começão a realimentar o sistema mudando esse input a cada ciclo.
 
 ![whatsapp image 2017-11-24 at 16 09 14](https://user-images.githubusercontent.com/32558138/33221895-deb3987a-d131-11e7-9088-d8d57c88bf06.jpeg)
-Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o sistema quando estamos operando no modo manual, ou seja, utilizando os potenciômetros. O input inicial é um valor atual no potenciômetro. O arduino atua com esse valor em cima dos servo motores.
+ Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o sistema quando estamos operando no modo manual, ou seja, utilizando os potenciômetros. O input inicial é um valor atual no potenciômetro. O arduino atua com esse valor em cima dos servo motores.
 
 ## ESQUEMÁTICO
 
