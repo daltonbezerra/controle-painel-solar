@@ -130,34 +130,63 @@ Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o s
 #### Inclui a livraria dos servo motores e declara todas as variáveis que serão utilizadas ao longo do código, bem como todas portas nas quais estão conectados cada componente.
 
 #include <Servo.h>
+
 Servo meuservo1;
+
 Servo meuservo2;
+
 int LDR1 = A5;
+
 int LDR2 = A4;
+
 int LDR3 = A0;
+
 int LDR4 = A1;
+
 int pos1 = 90;
+
 int pos2 = 90;
+
 int pot1 = A2;
+
 int pot2 = A3;
+
 int led = 3;
+
 int botao = 5;
+
 int var = LOW;
+
 int posicao1 = 30;
+
 int posicao2 = 30;
+
 int t_ant1=0;
+
 int t_atual1=0;
+
 float integral1=0;
+
 int t_ant2=0;
+
 int t_atual2=0;
+
 float integral2=0;
+
 float derivada1=0;
+
 float derivada2=0;
+
 int erro1=0;
+
 int erro1_ant=0;
+
 int derro1=0;
+
 int erro2=0;
+
 int erro2_ant=0;
+
 int derro2=0;
 
 
@@ -218,65 +247,68 @@ void loop(){
 
 
 
-#### Neste próximo bloco do código, ocorre a comparação da incidência de luz em cada LDR e é aplicado o PID.
 #### Para calculo do PID é necessario ter a diferença entre os valores dos LDRS, do erro atual, do erro anterior,
 #### do tempo atual e o tempo anterior. Com esse dados é possível realizar os calculos do PID:
 #### P=Kp x E(t), I=I + Ki x E(t) x Dt, D=(Derro/Dt) x Kd, tendo como calculo final para o servo motor: OUTPUT=P+I+D.
 
- 
-  if (graus1>graus2){
-  
-    pos1 = pos1+1;
-    
-    meuservo1.write(pos1);
-    
-    if (pos1>179){
-    
-      pos1=180; }
-      
-  }
-  
-  else if(graus1<graus2) {
-  
-    pos1 = pos1-1;
-    
-    meuservo1.write(pos1);
-    
-    if (pos1<1){
-    
-      pos1=0;}
-      
-  }
-  
-  if (graus3>graus4){
-  
-    pos2 = pos2+1;
-    
-    meuservo2.write(pos2);
-    
-    if (pos2>179){
-    
-      pos2=180; }
-      
-  }
-  else if(graus3<graus4) {
-  
-    pos2 = pos2-1;
-    
-    meuservo2.write(pos2);
-    
-    if (pos2<1){
-    
-      pos2=0;}
-      
-  }
-  
-  }
-  
-  delay(200);
+#### Nessa parte do codigo é calculado o "input" que coleta os valores cedido pelos LDRS e subtrai um do outro.
+ int input1 = graus1-graus2;//"P" e "I" e "D"
+#### Nessa parte do codigo é armazenado o "erro anterior" com o valor do erro atual e armazenado em "erro atual" com o valor de 0-input.
+ erro1_ant= erro1;//calculo do "I" e "D"
+ erro1 = 0-input1;//calculo do "P" e "I" e "D"
+ derro1 = erro1-erro1_ant;//"D"
+ t_ant1 = t_atual1;//"I" e "D"
+ t_atual1 = millis();//"I" e "D"
+ int dt1 = t_atual1-t_ant1;//"I" e "D"
+ integral1 = integral1+0.0001*erro1*dt1;
+ if (integral1>5){
+  integral1=5;
+ }
+ if (integral1<-5){
+  integral1=-5;
+ }
+ derivada1 = (derro1/dt1)*200;
+    pos1 = pos1+(float)(erro1*0.05)+(float)(integral1)+(derivada1);
+  if (pos1>60){
+    pos1 = 60;
+}
+  if (pos1<0){
+    pos1 = 0;
   
 }
-
+//Serial.println(integral1);
+//Serial.println(pos1);
+//Serial.println(derivada1);
+//Serial.println(erro1);
+meuservo1.write(pos1);
+//2 par de ldr
+int input2 = graus3-graus4;//"P" e "I" e "D"
+erro2_ant= erro2;//"I" e "D"
+erro2 = 0-input2;//"P" e "I" e "D"
+derro2 = erro2-erro2_ant;//"D"
+t_ant2 = t_atual2;//"I" e "D"
+ t_atual2 = millis();//"I" e "D"
+ int dt2 = t_atual2-t_ant2;//"I" e "D"
+ integral2 = integral2+0.0001*erro2*dt2;
+ if (integral2>5){
+  integral2=5;
+ }
+ if (integral2<-5){
+  integral2=-5;
+ }
+ derivada2 = (derro2/dt2)*200;
+  pos2 = pos2+(float)(erro2*0.05)+(float)(integral2)+(derivada2);
+if (pos2>60){
+  pos2 = 60;
+}
+  if (pos2<0){
+    pos2 = 0;
+  
+}
+meuservo2.write(pos2);
+  }
+  delay(100);
+}
 ## CONCLUSÃO
 
 
