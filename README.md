@@ -10,7 +10,7 @@ Rodrigo Paulo
 
 
 ## INTRODUÇÃO
-![image](https://user-images.githubusercontent.com/32208559/33126609-43082d08-cf6c-11e7-9629-a4478dba676a.png)
+![image](https://user-images.githubusercontent.com/32208559/33126554-14244076-cf6c-11e7-810a-064e7f2e85b9.png)
 
 O objetivo do projeto é construir um painel solar que permita tanto o controle manual quanto o controle automático do mesmo. Para isso, utilizaremos um botão para definir o modo de controle que iremos utilizar.
 
