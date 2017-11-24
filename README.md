@@ -229,12 +229,16 @@ void loop(){
   }
 
 
-#### Este bloco representa o modo manual de operação. Nesse bloco o arduino lê o valor associado aos potenciômetros, os converte em graus e escreve o valor em seu respectivo servo motor.
+#### Este bloco representa o modo manual de operação (var = 0).
 
 #### modo manual
   if (var == 0){
   
+#### Para o modo manual de operação, o LED de indicação deve permanecer desligado, por isso:
+  
   digitalWrite(led,var);
+  
+#### Nesta parte do código nós lemos os valores analógicos dos potenciômetros que vão de (0 a 1023) e os convertemos para (0 a 60). Após isso, escrevemos os valores já convertidos nos servomotores.
   
     int leiturapot1 = analogRead(pot1);
     
@@ -244,24 +248,21 @@ void loop(){
     
     int graus2 = map(leiturapot2, 0, 1023, 0, 60);
     
-#### Nesse trecho do código nós informamos ao arduino que o estado inicial dos servomotores é em 90 graus. Isso é muito importante, pois como os servomotores tem um curso total de 0 a 180 graus, caso sejam iniciados em qualquer outro valor que não seja na metade ele terá menos curso para um lado do que para o outro. (Repare que na declaração de variáveis, pos1 e pos2 são iguais a 90).
-    
     meuservo1.write(graus1);
     
     meuservo2.write(graus2);
     
   }
   
-#### Este bloco do código representa ao modo automático de operação. O arduíno entrará nesta parte do código caso o botão seja pressionado.
+#### Este bloco do código representa ao modo automático de operação. O arduíno entrará nesta parte do código caso o botão seja pressionado e a variável (var = 1).
 
-#### Quando o programa está em modo automático, o LED é ligado.
-
-#### Nesse bloco de código acontece a leitura de cada um dos LDR e a conversão dos mesmos para variáveis que representam a porcentagem de luz incidente em cada um deles.
-
-#### modo automatico
   if (var == 1){
   
+  #### Quando o programa está em modo automático, o LED é ligado.
+  
  digitalWrite(led,var);
+ 
+ #### Nesse bloco de código acontece a leitura de cada um dos LDR que vai de (1017 quando está totalmente escuro até 344 quando está totalmente claro).  Após a leitura, ocorre a conversão dos mesmos para variáveis que representam a porcentagem (0 para totalmente escuro e 100 para totalmente claro).
  
  int leitura1 = analogRead(LDR1);
  
@@ -278,7 +279,6 @@ void loop(){
  int graus3 = map(leitura3, 1017,344,0,100);
   
  int graus4 = map(leitura4, 1017,344,0,100);
-
 
 
 #### Para calculo do PID é necessario ter a diferença entre os valores dos LDRS, do erro atual, do erro anterior, do tempo atual e o tempo anterior. Com esse dados é possível realizar os calculos do PID: P=Kp x E(t), I=I + Ki x E(t) x Dt, D=(Derro/Dt) x Kd, tendo como calculo final para o servo motor: OUTPUT=P+I+D.
