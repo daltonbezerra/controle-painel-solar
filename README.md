@@ -128,7 +128,7 @@ Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o s
 
 
 #### Neste trecho do código é onde nós declaramos todas as variáveis que serâo utilizadas ao longo do código. É aqui também que informamos ao arduino em que porta cada componente está conectado. Caso do LDR 1 que está conectado a porta analógica 5.
-{
+
 #include <Servo.h>
 
 Servo meuservo1;
@@ -188,9 +188,9 @@ int erro2=0;
 int erro2_ant=0;
 
 int derro2=0;
-}
 
-#### Esse bloco do código declara o LED como componente de saída e o botão como entrada. Além disso, informa em quais portas digitais estão conectados cada servo e define qual variável irá representar a rotação de cada servo.
+
+#### No void Setup, nós informamos ao arduino que o LED é um componente de saída (OUTPUT) e o botâo é um componente de entrada (INPUT). É nesse trecho também que nós informamos que o servomotor1 está conectado a porta serial 2 e que o servomotor2 está conectado a porta serial 4.
 
 void setup(){
 
@@ -204,6 +204,9 @@ void setup(){
   
   meuservo2.attach(4);
   
+  
+#### Nesse trecho do código nós informamos ao arduino que o estado inicial dos servomotores é em 90 graus. Isso é muito importante, pois como os servomotores tem um curso total de 0 a 180 graus, caso sejam iniciados em qualquer outro valor que não seja na metade ele terá menos curso para um lado do que para o outro. (Repare que na declaração de variáveis, pos1 e pos2 são iguais a 90).
+
   meuservo1.write(pos1);
   
   meuservo2.write(pos2);
@@ -214,7 +217,7 @@ void setup(){
 
 
 #### Esse pequeno bloco de código lê caso o botão seja pressionado.
-#### Por padrão, o programa começa a rodar no modo manual, caso o botão seja pressionado ele passa a rodar no modo automático.
+#### Por padrão, o programa começa a rodar no modo manual. A variável "var" é responsável por definir se ele irá para o modo manual (var = 0) ou para o modo automático 
 
 void loop(){
 
