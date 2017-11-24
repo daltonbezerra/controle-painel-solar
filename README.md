@@ -38,31 +38,6 @@ Cabos,
 LED (01)
 
 
-## FLUXOGRAMA
-
- 
-![image](https://user-images.githubusercontent.com/32208559/33126381-6bbd47f2-cf6b-11e7-8340-d3f78960ac3e.png)
-
-
-## DIAGRAMA DE BLOCOS
-
-
-![whatsapp image 2017-11-21 at 21 28 22](https://user-images.githubusercontent.com/32208559/33126487-d15af262-cf6b-11e7-9938-c9dfa28f55dd.jpeg)
-
-
-## ESQUEMÁTICO E PLANEJAMENTO
-
-![image](https://user-images.githubusercontent.com/32208559/33126554-14244076-cf6c-11e7-810a-064e7f2e85b9.png)
-
-
-Esquemático do projeto no tinkerCad
-
-
-![image](https://user-images.githubusercontent.com/32208559/33126609-43082d08-cf6c-11e7-9629-a4478dba676a.png)
-
-
-Planejamento
-
 
 ## IMPLEMENTAÇÃO
 
@@ -129,6 +104,30 @@ Imagem 7: Arduino Uno
 ![image](https://user-images.githubusercontent.com/32208559/33126819-1c6cfaba-cf6d-11e7-9218-a96aeddf1ee6.png)
 
 Imagem 8: LED
+
+
+
+## FLUXOGRAMA
+
+ 
+  ![image](https://user-images.githubusercontent.com/32208559/33126381-6bbd47f2-cf6b-11e7-8340-d3f78960ac3e.png)
+          Aqui nós temos um fluxograma de como o código de fato funciona, a partir do momento que alimentamos o arduino, ele já entra na declaração de variáveis e após isso, ele vai para o modo de seleção de controle.
+          O que é o modo de seleção de controle? Nada mais é do que informar para o arduino se vamor querer controlar o painel de modo manual (utilizando potenciometros), ou de modo automático (utilizando os LDRs).
+          Após a seleção do modo de controle, ocorre a execução do código.
+
+
+## DIAGRAMA DE BLOCOS
+
+
+   ![whatsapp image 2017-11-21 at 21 28 22](https://user-images.githubusercontent.com/32208559/33126487-d15af262-cf6b-11e7-9938-c9dfa28f55dd.jpeg)
+          Esse é o diagrama de blocos de malha fechada, ele ilustra o que acontece com o sistema quando estamos operando no modo automático, ou seja, utilizando os LDRs. O input inicial é um valor já definido na declaração de variáveis do código. O arduino atua com esse valor em cima dos servo motores e após a primeira interação, os LDRs começão a realimentar o sistema mudando esse input a cada ciclo.
+
+
+
+## ESQUEMÁTICO
+
+![image](https://user-images.githubusercontent.com/32208559/33126554-14244076-cf6c-11e7-810a-064e7f2e85b9.png)
+          Como no projeto real é muito mais complicado de se entender visualmente as ligações, nós criamos esse esquemático através do TinkerCad para facilitar a visualição e compreensão de como fazer as ligações no arduino.
 
 
 # O CÓDIGO
