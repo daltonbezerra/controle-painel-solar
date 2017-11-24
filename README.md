@@ -114,7 +114,7 @@ LED (01)
    ![whatsapp image 2017-11-21 at 21 28 22](https://user-images.githubusercontent.com/32208559/33126487-d15af262-cf6b-11e7-9938-c9dfa28f55dd.jpeg)
           Esse é o diagrama de blocos de malha fechada, ele ilustra o que acontece com o sistema quando estamos operando no modo automático, ou seja, utilizando os LDRs. O input inicial é um valor já definido na declaração de variáveis do código. O arduino atua com esse valor em cima dos servo motores e após a primeira interação, os LDRs começão a realimentar o sistema mudando esse input a cada ciclo.
 
-
+![whatsapp image 2017-11-24 at 16 09 14](https://user-images.githubusercontent.com/32558138/33221895-deb3987a-d131-11e7-9088-d8d57c88bf06.jpeg)
 
 ## ESQUEMÁTICO
 
