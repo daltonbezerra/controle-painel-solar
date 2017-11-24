@@ -1,4 +1,5 @@
 # Painel Solar Seguidor de Luz
+![image](https://github.com/daltonbezerra/controle-painel-solar/blob/master/WhatsApp%20Image%202017-11-24%20at%2015.24.56.jpeg)
 
 Professor: Afonso Alves
 
