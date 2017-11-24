@@ -135,33 +135,33 @@ Imagem 8: LED
 
 #### Inclui a livraria dos servo motores e declara todas as variáveis que serão utilizadas ao longo do código, bem como todas portas nas quais estão conectados cada componente.
 
-#include <Servo.h>
+ #include <Servo.h>
 
-Servo meuservo1;
+ Servo meuservo1;
 
-Servo meuservo2;
+ Servo meuservo2;
 
-int LDR1 = A5;
+ int LDR1 = A5;
 
-int LDR2 = A4;
+ int LDR2 = A4;
 
-int LDR3 = A0;
+ int LDR3 = A0;
 
-int LDR4 = A1;
+ int LDR4 = A1;
 
-int pos1 = 90;
+ int pos1 = 90;
 
-int pos2 = 90;
+ int pos2 = 90;
 
-int pot1 = A2;
+ int pot1 = A2;
 
-int pot2 = A3;
+ int pot2 = A3;
 
-int led = 0;
+ int led = 0;
 
-int botao = 5;
+ int botao = 5;
 
-int var = LOW;
+ int var = LOW;
 
 
 #### Esse bloco do código declara o LED como componente de saída e o botão como entrada. Além disso, informa em quais portas digitais estão conectados cada servo e define qual variável irá representar a rotação de cada servo.
