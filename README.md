@@ -127,7 +127,7 @@ Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o s
 # O CÓDIGO
 
 
-#### Inclui a livraria dos servo motores e declara todas as variáveis que serão utilizadas ao longo do código, bem como todas portas nas quais estão conectados cada componente.
+#### Neste trecho do código é onde nós declaramos todas as variáveis que serâo utilizadas ao longo do código. É aqui também que informamos ao arduino em que porta cada componente está conectado. Caso do LDR 1 que está conectado a porta analógica 5.
 
 #include <Servo.h>
 
@@ -190,7 +190,7 @@ int erro2_ant=0;
 int derro2=0;
 
 
-#### Esse bloco do código declara o LED como componente de saída e o botão como entrada. Além disso, informa em quais portas digitais estão conectados cada servo e define qual variável irá representar a rotação de cada servo.
+#### No void Setup, nós informamos ao arduino que o LED é um componente de saída (OUTPUT) e o botâo é um componente de entrada (INPUT). É nesse trecho também que nós informamos que o servomotor1 está conectado a porta serial 2 e que o servomotor2 está conectado a porta serial 4.
 
 void setup(){
 
@@ -204,6 +204,8 @@ void setup(){
   
   meuservo2.attach(4);
   
+#### Nesse trecho do código nós informamos ao arduino que o estado inicial dos servomotores é em 90 graus. Isso é muito importante, pois como os servomotores tem um curso total de 0 a 180 graus, caso sejam iniciados em qualquer outro valor que não seja na metade ele terá menos curso para um lado do que para o outro. (Repare que na declaração de variáveis, pos1 e pos2 são iguais a 90).
+  
   meuservo1.write(pos1);
   
   meuservo2.write(pos2);
@@ -213,7 +215,8 @@ void setup(){
 }
 
 
-#### Esse pequeno bloco de código lê caso o botão seja pressionado. Por padrão, o programa começa a rodar no modo manual, caso o botão seja pressionado ele passa a rodar no modo automático.
+#### Esse pequeno bloco de código lê caso o botão seja pressionado.
+#### Por padrão, o programa começa a rodar no modo manual. A variável "var" é responsável por definir se ele irá para o modo manual (var = 0) ou para o modo automático (var = 1)
 
 void loop(){
 
@@ -240,6 +243,8 @@ void loop(){
     int graus1 = map(leiturapot1, 0, 1023, 0, 60);
     
     int graus2 = map(leiturapot2, 0, 1023, 0, 60);
+    
+#### Nesse trecho do código nós informamos ao arduino que o estado inicial dos servomotores é em 90 graus. Isso é muito importante, pois como os servomotores tem um curso total de 0 a 180 graus, caso sejam iniciados em qualquer outro valor que não seja na metade ele terá menos curso para um lado do que para o outro. (Repare que na declaração de variáveis, pos1 e pos2 são iguais a 90).
     
     meuservo1.write(graus1);
     
@@ -294,7 +299,9 @@ void loop(){
 #### Nessa parte do codigo é armazenado o "tempo anterior", transfomado o "tempo atual" em millis() e  calculado o "dt" usando o tempo atual e tempo anterior.
 
  t_ant1 = t_atual1;//"I" e "D"
+ 
  t_atual1 = millis();//"I" e "D"
+ 
  int dt1 = t_atual1-t_ant1;//"I" e "D"
  
 #### Nessa parte do codigo é calculado a integral que vai ser usada no PID, fazendo o valor de "integral" variar entre 5 e -5. Quando o valor fica positivo faz o servo ir pra um sentido e quando negativo faz o servo ir sentido contrário.
