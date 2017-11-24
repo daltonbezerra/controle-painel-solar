@@ -127,7 +127,7 @@ Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o s
 # O CÓDIGO
 
 
-#### Neste trecho do código é onde nós declaramos todas as variáveis que serâo utilizadas ao longo do código. É aqui também que informamos ao arduino em que porta cada componente está conectado. Caso do LDR 1 que está conectado a porta analógica 5.
+#### Inclui a livraria dos servo motores e declara todas as variáveis que serão utilizadas ao longo do código, bem como todas portas nas quais estão conectados cada componente.
 
 #include <Servo.h>
 
@@ -190,7 +190,7 @@ int erro2_ant=0;
 int derro2=0;
 
 
-#### No void Setup, nós informamos ao arduino que o LED é um componente de saída (OUTPUT) e o botâo é um componente de entrada (INPUT). É nesse trecho também que nós informamos que o servomotor1 está conectado a porta serial 2 e que o servomotor2 está conectado a porta serial 4.
+#### Esse bloco do código declara o LED como componente de saída e o botão como entrada. Além disso, informa em quais portas digitais estão conectados cada servo e define qual variável irá representar a rotação de cada servo.
 
 void setup(){
 
@@ -204,9 +204,6 @@ void setup(){
   
   meuservo2.attach(4);
   
-  
-#### Nesse trecho do código nós informamos ao arduino que o estado inicial dos servomotores é em 90 graus. Isso é muito importante, pois como os servomotores tem um curso total de 0 a 180 graus, caso sejam iniciados em qualquer outro valor que não seja na metade ele terá menos curso para um lado do que para o outro. (Repare que na declaração de variáveis, pos1 e pos2 são iguais a 90).
-
   meuservo1.write(pos1);
   
   meuservo2.write(pos2);
@@ -216,8 +213,7 @@ void setup(){
 }
 
 
-#### Esse pequeno bloco de código lê caso o botão seja pressionado.
-#### Por padrão, o programa começa a rodar no modo manual. A variável "var" é responsável por definir se ele irá para o modo manual (var = 0) ou para o modo automático 
+#### Esse pequeno bloco de código lê caso o botão seja pressionado. Por padrão, o programa começa a rodar no modo manual, caso o botão seja pressionado ele passa a rodar no modo automático.
 
 void loop(){
 
@@ -280,72 +276,121 @@ void loop(){
 
 
 
-#### Para calculo do PID é necessario ter a diferença entre os valores dos LDRS, do erro atual, do erro anterior,
-#### do tempo atual e o tempo anterior. Com esse dados é possível realizar os calculos do PID:
-#### P=Kp x E(t), I=I + Ki x E(t) x Dt, D=(Derro/Dt) x Kd, tendo como calculo final para o servo motor: OUTPUT=P+I+D.
+#### Para calculo do PID é necessario ter a diferença entre os valores dos LDRS, do erro atual, do erro anterior, do tempo atual e o tempo anterior. Com esse dados é possível realizar os calculos do PID: P=Kp x E(t), I=I + Ki x E(t) x Dt, D=(Derro/Dt) x Kd, tendo como calculo final para o servo motor: OUTPUT=P+I+D.
 
-#### Nessa parte do codigo é calculado o "input" que coleta os valores cedido pelos LDRS e subtrai um do outro.
+#### Nessa parte do codigo é calculado utilizado para definir os movimentos do 1 par de LDRS. Nessa parte o "input" coleta os valores cedido pelos LDRS e subtrai um do outro.
+
  int input1 = graus1-graus2;//"P" e "I" e "D"
+ 
 #### Nessa parte do codigo é armazenado o "erro anterior" com o valor do erro atual e armazenado em "erro atual" com o valor de 0-input.
+
  erro1_ant= erro1;//calculo do "I" e "D"
+ 
  erro1 = 0-input1;//calculo do "P" e "I" e "D"
- derro1 = erro1-erro1_ant;//"D"
+#### Nessa parte do codigo é armazenado o "derro" para calculo da derivada.
+
+ derro1 = erro1-erro1_ant;// calculo do "D"
+ 
+#### Nessa parte do codigo é armazenado o "tempo anterior", transfomado o "tempo atual" em millis() e  calculado o "dt" usando o tempo atual e tempo anterior.
+
  t_ant1 = t_atual1;//"I" e "D"
  t_atual1 = millis();//"I" e "D"
  int dt1 = t_atual1-t_ant1;//"I" e "D"
+ 
+#### Nessa parte do codigo é calculado a integral que vai ser usada no PID, fazendo o valor de "integral" variar entre 5 e -5. Quando o valor fica positivo faz o servo ir pra um sentido e quando negativo faz o servo ir sentido contrário.
+ 
  integral1 = integral1+0.0001*erro1*dt1;
+ 
  if (integral1>5){
+ 
   integral1=5;
+  
  }
+ 
  if (integral1<-5){
+ 
   integral1=-5;
+  
  }
+
+#### Nessa parte do codigo é calculado a "derivada" usando o "derro", "dt" e multiplicado pelo Kd.
+
  derivada1 = (derro1/dt1)*200;
+ 
+#### Nessa parte do codigo é calculado o valor do PID que vai para o servo variando este de 0 a 60 de acordo com os angulos definidos  pela equipe para melhor aproveitamento dos movimentos do servo.
+
     pos1 = pos1+(float)(erro1*0.05)+(float)(integral1)+(derivada1);
+    
   if (pos1>60){
+  
     pos1 = 60;
+    
 }
+
   if (pos1<0){
+  
     pos1 = 0;
-  
+      
 }
-//Serial.println(integral1);
-//Serial.println(pos1);
-//Serial.println(derivada1);
-//Serial.println(erro1);
+
 meuservo1.write(pos1);
-//2 par de ldr
+
+#### Nessa parte do codigo é calculado utilizado para definir os movimentos do 2 par de LDRS. Os calculos são os mesmos a diferença fica somente pela nomeclatura das variáveis.
+
 int input2 = graus3-graus4;//"P" e "I" e "D"
+
 erro2_ant= erro2;//"I" e "D"
+
 erro2 = 0-input2;//"P" e "I" e "D"
+
 derro2 = erro2-erro2_ant;//"D"
+
 t_ant2 = t_atual2;//"I" e "D"
+
  t_atual2 = millis();//"I" e "D"
+ 
  int dt2 = t_atual2-t_ant2;//"I" e "D"
+ 
  integral2 = integral2+0.0001*erro2*dt2;
+ 
  if (integral2>5){
+ 
   integral2=5;
- }
- if (integral2<-5){
-  integral2=-5;
- }
- derivada2 = (derro2/dt2)*200;
-  pos2 = pos2+(float)(erro2*0.05)+(float)(integral2)+(derivada2);
-if (pos2>60){
-  pos2 = 60;
-}
-  if (pos2<0){
-    pos2 = 0;
   
+ }
+ 
+ if (integral2<-5){
+ 
+  integral2=-5;
+  
+ }
+ 
+ derivada2 = (derro2/dt2)*200;
+ 
+  pos2 = pos2+(float)(erro2*0.05)+(float)(integral2)+(derivada2);
+  
+if (pos2>60){
+
+  pos2 = 60;
+  
+}
+
+  if (pos2<0){
+  
+    pos2 = 0;
+      
 }
 meuservo2.write(pos2);
+
   }
+  
   delay(100);
+  
 }
+
 ## CONCLUSÃO
-
-
 A principal aplicação deste projeto é em painéis fotovoltaicos de usinas de energia solar. Este sistema possibilita um aproveitamento muito maior na conversão de energia fotovoltaica uma vez que os painéis solares estariam sempre voltados em direção ao sol.
 Para que essa implementação ocorra, será necessário otimizar o código, pesquisar por componentes mais resistentes a intempéries já que os mesmos ficariam expostos no campo, fabricar o produto em escala industrial.
+Na aplicação do PID ficou claro a utiliadade de de cada um, sendo o P um valor mais atual possivel para o movimento, o I uma integral que varia entre 5 e -5 fazendo o servo não ter movimentos bruscos com pequena mudaçã de luminosidade e o D como se fosse um amortecedor do movimento.
 
 
