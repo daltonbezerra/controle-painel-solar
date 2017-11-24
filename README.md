@@ -129,53 +129,49 @@ Esse é o diagrama de blocos de malha aberta, ele ilustra o que acontece com o s
 
 #### Inclui a livraria dos servo motores e declara todas as variáveis que serão utilizadas ao longo do código, bem como todas portas nas quais estão conectados cada componente.
 
- #include <Servo.h>
-
- Servo meuservo1;
-
- Servo meuservo2;
-
- int LDR1 = A5;
-
- int LDR2 = A4;
-
- int LDR3 = A0;
-
- int LDR4 = A1;
-
- int pos1 = 90;
-
- int pos2 = 90;
-
- int pot1 = A2;
-
- int pot2 = A3;
-
- int led = 0;
-
- int botao = 5;
-
- int var = LOW;
+#include <Servo.h>
+Servo meuservo1;
+Servo meuservo2;
+int LDR1 = A5;
+int LDR2 = A4;
+int LDR3 = A0;
+int LDR4 = A1;
+int pos1 = 90;
+int pos2 = 90;
+int pot1 = A2;
+int pot2 = A3;
+int led = 3;
+int botao = 5;
+int var = LOW;
+int posicao1 = 30;
+int posicao2 = 30;
+int t_ant1=0;
+int t_atual1=0;
+float integral1=0;
+int t_ant2=0;
+int t_atual2=0;
+float integral2=0;
+float derivada1=0;
+float derivada2=0;
+int erro1=0;
+int erro1_ant=0;
+int derro1=0;
+int erro2=0;
+int erro2_ant=0;
+int derro2=0;
 
 
 #### Esse bloco do código declara o LED como componente de saída e o botão como entrada. Além disso, informa em quais portas digitais estão conectados cada servo e define qual variável irá representar a rotação de cada servo.
 
 void setup(){
-
   pinMode(led, OUTPUT);
-  
   pinMode(botao, INPUT);
-  
   digitalWrite(led,0);
-  
   meuservo1.attach(2);
-  
   meuservo2.attach(4);
-  
   meuservo1.write(pos1);
-  
   meuservo2.write(pos2);
-  
+  Serial.begin(9600);
 }
 
 
@@ -183,13 +179,9 @@ void setup(){
 #### Por padrão, o programa começa a rodar no modo manual, caso o botão seja pressionado ele passa a rodar no modo automático.
 
 void loop(){
-
   int press = digitalRead(botao);
-  
   if (press == 1){
-  
    var =1-var;
-   
   }
 
 
@@ -197,21 +189,13 @@ void loop(){
 
 #### modo manual
   if (var == 0){
-  
   digitalWrite(led,var);
-  
     int leiturapot1 = analogRead(pot1);
-    
     int leiturapot2 = analogRead(pot2);
-    
-    int graus1 = map(leiturapot1, 0, 1023, 0, 180);
-    
-    int graus2 = map(leiturapot2, 0, 1023, 0, 180);
-    
+    int graus1 = map(leiturapot1, 0, 1023, 0, 60);
+    int graus2 = map(leiturapot2, 0, 1023, 0, 60);
     meuservo1.write(graus1);
-    
     meuservo2.write(graus2);
-    
   }
   
 #### Este bloco do código representa ao modo automático de operação. O arduíno entrará nesta parte do código caso o botão seja pressionado.
@@ -222,32 +206,22 @@ void loop(){
 
 #### modo automatico
   if (var == 1){
-  
-  digitalWrite(led,var);
-  
-  int leitura1 = analogRead(LDR1);
-  
-  int leitura2 = analogRead(LDR2);
-  
-  int leitura3 = analogRead(LDR3);
-  
-  int leitura4 = analogRead(LDR4);
-  
-
-  int graus1 = map(leitura1, 1017,344,0,100);
-  
-  int graus2 = map(leitura2, 1017,344,0,100);
-  
-  int graus3 = map(leitura3, 1017,344,0,100);
-  
-  int graus4 = map(leitura4, 1017,344,0,100);
+ digitalWrite(led,var);
+ int leitura1 = analogRead(LDR1);
+ int leitura2 = analogRead(LDR2);
+ int leitura3 = analogRead(LDR3);
+ int leitura4 = analogRead(LDR4);
+ int graus1 = map(leitura1, 1017,344,0,100);
+ int graus2 = map(leitura2, 1017,344,0,100);
+ int graus3 = map(leitura3, 1017,344,0,100);
+ int graus4 = map(leitura4, 1017,344,0,100);
 
 
 
-
-
-
-#### Neste próximo bloco do código, ocorre a comparação da incidência de luz em cada LDR.
+#### Neste próximo bloco do código, ocorre a comparação da incidência de luz em cada LDR e é aplicado o PID.
+#### Para calculo do PID é necessario ter a diferença entre os valores dos LDRS, do erro atual, do erro anterior,
+#### tempo atual e tempo anterior. Com esse dados é possivel descobir realizar os calculos do PID:
+#### P=Kp x E(t), I=I + Ki x E(t) x Dt, D=(Derro/Dt) x Kd, tendo como calculo final para o servo motor: OUTPUT=P+I+D.
 #### A comparação é necessária pois é através dela que definiremos para qual lado o servo motor deverá rotacionar.
  
   if (graus1>graus2){
