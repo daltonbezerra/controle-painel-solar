@@ -103,9 +103,8 @@ LED (01)
 
  
   ![image](https://user-images.githubusercontent.com/32208559/33126381-6bbd47f2-cf6b-11e7-8340-d3f78960ac3e.png)
-          Aqui nós temos um fluxograma de como o código de fato funciona, a partir do momento que alimentamos o arduino, ele já entra na declaração de variáveis e após isso, ele vai para o modo de seleção de controle.
-          O que é o modo de seleção de controle? Nada mais é do que informar para o arduino se vamor querer controlar o painel de modo manual (utilizando potenciometros), ou de modo automático (utilizando os LDRs).
-          Após a seleção do modo de controle, ocorre a execução do código.
+          
+          Aqui nós temos um fluxograma de como o código de fato funciona, a partir do momento que alimentamos o arduino, ele já entra na declaração de variáveis e após isso, ele vai para o modo de seleção de controle. O que é o modo de seleção de controle? Nada mais é do que informar para o arduino se vamor querer controlar o painel de modo manual (utilizando potenciometros), ou de modo automático (utilizando os LDRs). Após a seleção do modo de controle, ocorre a execução do código.
 
 
 ## DIAGRAMA DE BLOCOS
