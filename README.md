@@ -143,9 +143,9 @@ int LDR3 = A0;
 
 int LDR4 = A1;
 
-int pos1 = 90;
+int pos1 = 30;
 
-int pos2 = 90;
+int pos2 = 30;
 
 int pot1 = A2;
 
@@ -156,10 +156,6 @@ int led = 3;
 int botao = 5;
 
 int var = LOW;
-
-int posicao1 = 30;
-
-int posicao2 = 30;
 
 int t_ant1=0;
 
@@ -283,28 +279,31 @@ void loop(){
 
 #### Para calculo do PID é necessario ter a diferença entre os valores dos LDRS, do erro atual, do erro anterior, do tempo atual e o tempo anterior. Com esse dados é possível realizar os calculos do PID: P=Kp x E(t), I=I + Ki x E(t) x Dt, D=(Derro/Dt) x Kd, tendo como calculo final para o servo motor: OUTPUT=P+I+D.
 
-#### Nessa parte do codigo é calculado utilizado para definir os movimentos do 1 par de LDRS. Nessa parte o "input" coleta os valores cedido pelos LDRS e subtrai um do outro.
+#### Na primeira metade do código de controle automático, ocorre o controle do primeiro par de LDRs. Nessa linha do código a variável input1 recebe a diferença de brilho entre os LDRs.
 
  int input1 = graus1-graus2;//"P" e "I" e "D"
  
-#### Nessa parte do codigo é armazenado o "erro anterior" com o valor do erro atual e armazenado em "erro atual" com o valor de 0-input.
+#### Nessa parte do codigo a variável (erro1_ant) recebe o valor que está armazenado na variável (erro1), com o erro já armazenado na variável (erro1_ant), a variável (erro1) ficará livre para receber o novo valor do erro atual do sistema.
 
  erro1_ant= erro1;//calculo do "I" e "D"
  
  erro1 = 0-input1;//calculo do "P" e "I" e "D"
-#### Nessa parte do codigo é armazenado o "derro" para calculo da derivada.
+ 
+#### Nessa linha do codigo a variável (derro1) recebe o erro atual subtraido do erro anterior para o calculo da derivada.
 
  derro1 = erro1-erro1_ant;// calculo do "D"
  
-#### Nessa parte do codigo é armazenado o "tempo anterior", transfomado o "tempo atual" em millis() e  calculado o "dt" usando o tempo atual e tempo anterior.
+#### Nessa parte do codigo a variável (t_ant1) recebe o valor que está armazenado na variável (t_atual1), com o tempo já armazenado na variável (t_ant1), a variável (t_atual1) ficará livre para receber o novo valor do tempo atual do sistema em milissegundos.
 
  t_ant1 = t_atual1;//"I" e "D"
  
  t_atual1 = millis();//"I" e "D"
  
+#### Nessa linha do codigo a variável (dt1) recebe o tempo atual subtraido do tempo anterior para o calculo da integral.
+ 
  int dt1 = t_atual1-t_ant1;//"I" e "D"
  
-#### Nessa parte do codigo é calculado a integral que vai ser usada no PID, fazendo o valor de "integral" variar entre 5 e -5. Quando o valor fica positivo faz o servo ir pra um sentido e quando negativo faz o servo ir sentido contrário.
+#### Nessa parte do codigo é calculado a integral que vai ser usada no PID, fazendo o valor de integral variar entre 5 e -5. Quando o valor fica positivo faz o servo ir pra um sentido e quando negativo faz o servo ir sentido contrário.
  
  integral1 = integral1+0.0001*erro1*dt1;
  
@@ -320,7 +319,7 @@ void loop(){
   
  }
 
-#### Nessa parte do codigo é calculado a "derivada" usando o "derro", "dt" e multiplicado pelo Kd.
+#### Nessa parte do codigo é calculado a derivada que nada mais é do que: (erro atual - erro anterior)/(tempo atual - tempo anterior), e multiplicado pela constante Kd = 200.
 
  derivada1 = (derro1/dt1)*200;
  
@@ -342,21 +341,31 @@ void loop(){
 
 meuservo1.write(pos1);
 
-#### Nessa parte do codigo é calculado utilizado para definir os movimentos do 2 par de LDRS. Os calculos são os mesmos a diferença fica somente pela nomeclatura das variáveis.
+#### Essa parte do codigo é utilizada para controlar os movimentos do segundo par de LDRS. Nessa linha, a variável input2 recebe a diferença de luminosidade entre o segundo par de LDRs.
 
 int input2 = graus3-graus4;//"P" e "I" e "D"
+
+#### Nessa parte do codigo a variável (erro2_ant) recebe o valor que está armazenado na variável (erro2), com o erro já armazenado na variável (erro2_ant), a variável (erro2) ficará livre para receber o novo valor do erro atual do sistema.
 
 erro2_ant= erro2;//"I" e "D"
 
 erro2 = 0-input2;//"P" e "I" e "D"
 
+#### Nessa linha do codigo a variável (derro2) recebe o erro atual subtraido do erro anterior para o calculo da derivada.
+
 derro2 = erro2-erro2_ant;//"D"
+
+#### Nessa parte do codigo a variável (t_ant2) recebe o valor que está armazenado na variável (t_atual2), com o tempo já armazenado na variável (t_ant2), a variável (t_atual2) ficará livre para receber o novo valor do tempo atual do sistema em milissegundos.
 
 t_ant2 = t_atual2;//"I" e "D"
 
  t_atual2 = millis();//"I" e "D"
  
+#### Nessa linha do codigo a variável (dt2) recebe o tempo atual subtraido do tempo anterior para o calculo da integral.
+ 
  int dt2 = t_atual2-t_ant2;//"I" e "D"
+ 
+#### Nessa parte do codigo é calculado a integral que vai ser usada no PID, fazendo o valor da integral variar entre 5 e -5. Quando o valor fica positivo faz o servo ir pra um sentido e quando negativo faz o servo ir sentido contrário.
  
  integral2 = integral2+0.0001*erro2*dt2;
  
@@ -371,6 +380,8 @@ t_ant2 = t_atual2;//"I" e "D"
   integral2=-5;
   
  }
+ 
+#### Nessa parte do codigo é calculado a derivada que nada mais é do que: (erro atual - erro anterior)/(tempo atual - tempo anterior), e multiplicado pela constante Kd = 200.
  
  derivada2 = (derro2/dt2)*200;
  
@@ -397,7 +408,7 @@ meuservo2.write(pos2);
 
 ## CONCLUSÃO
 A principal aplicação deste projeto é em painéis fotovoltaicos de usinas de energia solar. Este sistema possibilita um aproveitamento muito maior na conversão de energia fotovoltaica uma vez que os painéis solares estariam sempre voltados em direção ao sol.
-Para que essa implementação ocorra, será necessário otimizar o código, pesquisar por componentes mais resistentes a intempéries já que os mesmos ficariam expostos no campo, fabricar o produto em escala industrial.
-Na aplicação do PID ficou claro a utiliadade de de cada um, sendo o P um valor mais atual possivel para o movimento, o I uma integral que varia entre 5 e -5 fazendo o servo não ter movimentos bruscos com pequena mudaçã de luminosidade e o D como se fosse um amortecedor do movimento.
+Para que essa implementação ocorra, presaremos pesquisar por componentes mais resistentes a intempéries já que os mesmos ficariam expostos no campo e fabricar o produto em escala industrial.
+Na aplicação do PID ficou claro a utilidade de de cada um, sendo o P um valor mais atual possivel para o movimento, o I uma integral que varia entre 5 e -5 fazendo o servo não ter movimentos bruscos com pequenas mudanças de luminosidade e o D como se fosse um amortecedor do movimento.
 
 
