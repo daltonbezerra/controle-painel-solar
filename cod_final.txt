@@ -86,6 +86,7 @@ void loop(){
     pos1 = 0;
   
 }
+//Utilize essas linhas caso queira visualizar no console do arduino o que está acontecendo com essas variáveis.
 //Serial.println(integral1);
 //Serial.println(pos1);
 //Serial.println(derivada1);
