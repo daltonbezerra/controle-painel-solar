@@ -200,7 +200,7 @@ void setup(){
   
   meuservo2.attach(4);
   
-#### Nesse trecho do código nós informamos ao arduino que o estado inicial dos servomotores é em 90 graus. Isso é muito importante, pois como os servomotores tem um curso total de 0 a 180 graus, caso sejam iniciados em qualquer outro valor que não seja na metade ele terá menos curso para um lado do que para o outro. (Repare que na declaração de variáveis, pos1 e pos2 são iguais a 90).
+#### Nesse trecho do código nós informamos ao arduino que o estado inicial dos servomotores é em 30 graus. Isso é muito importante, pois como os servomotores tem um curso total de 0 a 180 graus, porém nós descidimos que ele irá trabalhar de 0 a 60. Caso sejam iniciados em qualquer outro valor que não seja na metade ele terá menos curso para um lado do que para o outro. (Repare que na declaração de variáveis, pos1 e pos2 são iguais a 90).
   
   meuservo1.write(pos1);
   
