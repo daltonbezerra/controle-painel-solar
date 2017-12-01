@@ -1,6 +1,6 @@
 # Painel Solar Seguidor de Luz
 
-Professor: Afonso Alves
+Professor: Afonso Fontes
 
 Alunos:
 Lucas Valente,
